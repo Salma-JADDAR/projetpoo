@@ -20,5 +20,9 @@ class BasicUser extends User {
     public function resetUploadCount(): void {
         $this->uploadCountMensuel = 0;
     }
+
+    public function __toString(): string {
+        return parent::__toString() . "Uploads this month: {$this->uploadCountMensuel}";
+    }
 }
 ?>

@@ -16,5 +16,9 @@ class Moderator extends User {
     public function setNiveau(string $niveau): void {
         $this->niveau = $niveau;
     }
+
+    public function __toString(): string {
+        return parent::__toString() . "Niveau: {$this->niveau}\n";
+    }
 }
 ?>

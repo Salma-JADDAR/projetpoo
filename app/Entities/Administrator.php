@@ -18,6 +18,8 @@ class Administrator extends User {
         $this->isSuperAdmin = $isSuperAdmin;
     }
 
-  
+    public function __toString(): string {
+        return parent::__toString() . "SuperAdmin: " . ($this->isSuperAdmin ? 'Yes' : 'No') . "\n";
+    }
 }
 ?>

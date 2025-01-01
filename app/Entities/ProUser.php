@@ -26,5 +26,8 @@ class ProUser extends BasicUser {
     public function setAbonnementEnd(?string $date): void {
         $this->abonnementEnd = $date;
     }
+    public function __toString(): string {
+        return parent::__toString() . "Abonnement Start: {$this->abonnementStart}\nAbonnement End: {$this->abonnementEnd}\n";
+    }
 }
 ?>
