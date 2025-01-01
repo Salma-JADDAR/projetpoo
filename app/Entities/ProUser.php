@@ -1,14 +1,17 @@
 <?php
 namespace App\Entities;
 
-class ProUser extends BasicUser {
+class ProUser extends User {
     private ?string $abonnementStart;
     private ?string $abonnementEnd;
-
-    public function __construct(string $username,string $email,string $password,?string $bio = null,?string $photoProfil = null,?string $abonnementStart = null,?string $abonnementEnd = null){
+    private int $uploadCountMensuel;
+    
+    public function __construct(string $username, string $email,string $password,?string $bio = null, ?string $photoProfil = null,int $uploadCountMensuel = 0,?string $abonnementStart = null, ?string $abonnementEnd = null) {
         parent::__construct($username, $email, $password, 'Pro', $bio, $photoProfil);
+        $this->uploadCountMensuel = $uploadCountMensuel;
         $this->abonnementStart = $abonnementStart;
         $this->abonnementEnd = $abonnementEnd;
+        
     }
 
     public function getAbonnementStart(): ?string {
@@ -26,8 +29,24 @@ class ProUser extends BasicUser {
     public function setAbonnementEnd(?string $date): void {
         $this->abonnementEnd = $date;
     }
+    
+    public function getUploadCountMensuel(): int {
+        return $this->uploadCountMensuel;
+    }
+
+    public function setUploadCountMensuel(int $uploadCountMensuel): void {
+        $this->uploadCountMensuel = $uploadCountMensuel;
+    }
+
+    public function incrementUpload(): void {
+        $this->uploadCountMensuel++;
+    }
+    
     public function __toString(): string {
-        return parent::__toString() . "Abonnement Start: {$this->abonnementStart}\nAbonnement End: {$this->abonnementEnd}\n";
+        return parent::__toString() . 
+               "Uploads: {$this->uploadCountMensuel}\n" .
+               "Abonnement Start: {$this->abonnementStart}\n" .
+               "Abonnement End: {$this->abonnementEnd}\n";
     }
 }
 ?>

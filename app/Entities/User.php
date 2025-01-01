@@ -96,11 +96,6 @@ abstract class User {
         $this->lastLogin = $lastLogin;
     }
 
-    
-    public function checkPassword(string $password): bool {
-        return password_verify($password, $this->password);
-    }
-
     public function __toString(): string {
         return "Username: {$this->username}\n \n \n \nRole: {$this->role}\n \n\n\nBio: {$this->bio}\nPhoto: {$this->photoProfil}\nCreatedAt: {$this->createdAt}\n";
     }
