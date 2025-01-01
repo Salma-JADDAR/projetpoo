@@ -139,7 +139,19 @@ $repo = new UserRepository();
 
 //}
 
+////////////////////////////////////////////////////// supprimer ////////////////////////////////////////
+$id = 12;
+$user = $repo->findById($id);
 
+if (!$user) {
+    echo " Utilisateur introuvable";
+} else {
+    if ($repo->delete($id)) {
+        echo " Utilisateur {$user->getUsername()} supprimé";
+    } else {
+        echo " Erreur suppression";
+    }
+}
 
 
 

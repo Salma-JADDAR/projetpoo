@@ -229,6 +229,14 @@ class UserRepository {
   
     
     return $user;
+  }
+
+
+  public function delete(int $id): bool{
+    $sql = "DELETE FROM users WHERE id = ?";
+    $stmt = $this->conn->prepare($sql);
+    return $stmt->execute([$id]);
 }
+
 }
 ?>
