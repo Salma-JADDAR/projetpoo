@@ -10,6 +10,14 @@ class Administrator extends User {
         $this->isSuperAdmin = $isSuperAdmin;
     }
 
-   
+    public function getIsSuperAdmin(): bool {
+        return $this->isSuperAdmin;
+    }
+
+    public function setIsSuperAdmin(bool $isSuperAdmin): void {
+        $this->isSuperAdmin = $isSuperAdmin;
+    }
+
+  
 }
 ?>
