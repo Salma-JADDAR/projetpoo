@@ -9,3 +9,5 @@ try {
 } catch (Error $e) {
     echo "Impossible d'instancier User directement: " . $e->getMessage();
 }
+
+

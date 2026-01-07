@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Interfaces\Commentable;
 use App\Config\Database;
 use PDO;
 
-class CommentRepository implements Commentable {
+class CommentRepository {
     private PDO $conn;
 
     public function __construct() {
@@ -15,28 +14,33 @@ class CommentRepository implements Commentable {
         $this->conn = $db->getConnection();
     }
 
-    public function addComment(string $content, int $userId, int $photoId): int {
+    public function add(string $contenu, int $id_user, int $id_photo): int {
         $sql = "INSERT INTO commentaire (contenu, id_user, id_photo) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$content, $userId, $photoId]);
+        $stmt->execute([$contenu, $id_user, $id_photo]);
         return (int)$this->conn->lastInsertId();
     }
 
-    public function removeComment(int $commentId): bool {
-        $sql = "DELETE FROM commentaire WHERE id_com = ?";
+    public function remove(int $id_com): bool {
+        $stmt = $this->conn->prepare("DELETE FROM commentaire WHERE id_com = ?");
+        return $stmt->execute([$id_com]);
+    }
+
+    public function findByPhoto(int $id_photo): array {
+        $sql = "SELECT c.*, u.username FROM commentaire c 
+                JOIN users u ON c.id_user = u.id 
+                WHERE c.id_photo = ? 
+                ORDER BY c.createdAt DESC";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([$commentId]);
+        $stmt->execute([$id_photo]);
+        return $stmt->fetchAll();
     }
 
-    public function getComments(int $photoId): array {
-        $stmt = $this->conn->prepare("SELECT * FROM commentaire WHERE id_photo = ?");
-        $stmt->execute([$photoId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getCommentCount(int $photoId): int {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM commentaire WHERE id_photo = ?");
-        $stmt->execute([$photoId]);
-        return (int)$stmt->fetchColumn();
+    public function countByPhoto(int $id_photo): int {
+        $sql = "SELECT COUNT(*) as count FROM commentaire WHERE id_photo = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id_photo]);
+        $result = $stmt->fetch();
+        return (int)$result['count'];
     }
 }
