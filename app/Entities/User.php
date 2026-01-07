@@ -12,8 +12,7 @@ abstract class User {
     protected string $createdAt;
     protected ?string $lastLogin;
 
-    public function __construct(string $username, string $email, string $password, string $role, ?string $bio = null, ?string $photoProfil = null)
-    {
+    public function __construct(string $username, string $email, string $password, string $role, ?string $bio = null, ?string $photoProfil = null){
         $this->username = $username;
         $this->email = $email;
         $this->password = password_hash($password, PASSWORD_BCRYPT);
